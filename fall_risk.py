@@ -6,18 +6,18 @@ from sklearn.linear_model import LogisticRegression
 
 # Open csv file, and split into features and labels
 # Note that for fall_risk (1 = Yes, 0 = No)
-def predict_fall_risk(age, berg, gait):
+def predict(age, berg, gait):
     df = pd.read_csv('fall_risk.csv')
     features = df[['age','berg_balance','gait_speed']]
     labels = df[['fall_risk']]
 
     age_min = df[['age']].min()
-    berg_balance_min = df[['berg_balance']].min()
-    gait_speed_min = df[['gait_speed']].min()
+    berg_min = df[['berg_balance']].min()
+    gait_min = df[['gait_speed']].min()
 
     age_range = df[['age']].max() - age_min
-    berg_balance_range = df[['berg_balance']].max() - berg_balance_min
-    gait_speed_range = df[['gait_speed']].max() - gait_speed_min
+    berg_range = df[['berg_balance']].max() - berg_min
+    gait_range = df[['gait_speed']].max() - gait_min
 
     # Perform feature scaling
     scaler = MinMaxScaler()
@@ -32,20 +32,20 @@ def predict_fall_risk(age, berg, gait):
     logistic = LogisticRegression()
     logistic.fit(X_train,y_train)
 
-    # prediction is expecting data is a 1x3 two-dimensional array [[age, berg, gait]]
-    # remember that the unknown data point must be scaled appropriately
-        #scaling is done by: (x-minimum)/range
+    # Scale the input values: (value-min)/range
+    # Note .item() returns the first element of the data structure
+    # age_scaled is a pandas Series object, which has the value AND the datatype
+    # We only want the value.
+    age_scaled = ((age - age_min) / age_range).item()
+    berg_scaled = ((berg - berg_min) / berg_range).item()
+    gait_scaled = ((gait - gait_min) / gait_range).item()
 
-    # prediction = logistic.predict(X_test[0].reshape(1,-1))
-    prediction = logistic.predict([[age, berg, gait]])
+    prediction = logistic.predict([[age_scaled, berg_scaled, gait_scaled]])
     score = logistic.score(X_test, y_test)
 
     if prediction == 0:
-        print("Low fall risk")
+        return {"Fall Risk": "LOW",
+                "Model Accuracy": score}
     else:
-        print("High fall risk")
-
-    print("Model accuracy is:", score)
-
-# TO INVOKE THIS FUNCTION:
-predict_fall_risk(76,78,1.12)
+        return {"Fall Risk": "HIGH",
+                "Model Accuracy": score}
