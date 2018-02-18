@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 # Open csv file, and split into features and labels
-# Note that for fall_risk (1 = Yes, 0 = No)
+# Note that for fall_risk (1 = High, 0 = Low)
 def predict(age, berg, gait):
     df = pd.read_csv('fall_risk.csv')
     features = df[['age','berg_balance','gait_speed']]

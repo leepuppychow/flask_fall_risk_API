@@ -13,7 +13,7 @@ def hello():
 # 2) Deploy on Heroku
 
 @app.route('/predict', methods=['GET'])
-def predict():
+def predict_fall_risk():
     age = float(request.args.get('age'))
     berg = float(request.args.get('berg'))
     gait = float(request.args.get('gait'))
