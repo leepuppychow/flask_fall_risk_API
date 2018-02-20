@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, request
-from sklearn.externals import joblib
 import fall_risk
 
 app = Flask(__name__)
@@ -8,9 +7,11 @@ app = Flask(__name__)
 def hello():
     return "Fall risk prediction API (logistic regression multivariate classifier)"
 
-# NEXT STEPS:
-# 1) Pickle the model, so you only have to train once
-# 2) Deploy on Heroku
+# This route is here for the admin to train the model the first time
+@app.route('/train_logistic', methods=['GET'])
+def train():
+    fall_risk.logistic_model()
+    return "Logistic Regression Model Trained"
 
 @app.route('/predict', methods=['GET'])
 def predict_fall_risk():
