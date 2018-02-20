@@ -3,7 +3,7 @@ import fall_risk
 
 app = Flask(__name__)
 
-@app.route("/v1")
+@app.route("/v1/")
 def hello():
     return "Fall risk prediction API (logistic regression multivariate classifier)"
 
