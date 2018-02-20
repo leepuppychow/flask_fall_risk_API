@@ -51,8 +51,8 @@ def predict(age, berg, gait):
     prediction = logistic.predict([[age_scaled, berg_scaled, gait_scaled]])
 
     if prediction == 0:
-        return {"Fall Risk": "LOW",
-                "Model Accuracy": score}
+        return {"fall_risk": "LOW",
+                "model_accuracy": score}
     else:
-        return {"Fall Risk": "HIGH",
-                "Model Accuracy": score}
+        return {"fall_risk": "HIGH",
+                "model_accuracy": score}
