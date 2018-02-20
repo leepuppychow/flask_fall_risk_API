@@ -1,4 +1,4 @@
-### README
+# README
 
 ## Description
 
@@ -11,7 +11,9 @@
 ## Endpoints
 
 * To train the model the first time:
+
 ` GET request to: /train_logistic `
 
 * To get a prediction (age in years, berg as percentage, gait in m/s):
+
 ` GET request to: /predict?age=75&berg=88&gait=1.1`
