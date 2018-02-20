@@ -1,1 +1,1 @@
-web: gunicorn fall_risk_api
+web: gunicorn app
