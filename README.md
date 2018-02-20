@@ -12,8 +12,8 @@
 
 To train the model the first time:
 
-` GET request to: /fall_risk_api/v1/train_logistic `
+` GET request to: https://fall-risk-api.herokuapp.com/v1/train_logistic`
 
 To get a prediction (age in years, berg as percentage, gait in m/s):
 
-` GET request to: /fall_risk_api/v1/predict?age=75&berg=88&gait=1.1`
+` GET request to: https://fall-risk-api.herokuapp.com//v1/predict?age=75&berg=88&gait=1.1`
