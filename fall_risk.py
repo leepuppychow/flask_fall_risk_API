@@ -22,8 +22,6 @@ def logistic_model():
     X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3)
     logistic = LogisticRegression()
     logistic.fit(X_train,y_train)
-    global score
-    score = logistic.score(X_test, y_test)
 
     data = {
         "model": logistic,
@@ -41,14 +39,6 @@ def logistic_model():
 
 def predict(age, berg, gait):
     data = joblib.load("./logistic_regression_data.pkl")
-    # model = data["model"]
-    # age_min = data["age_min"]
-    # berg_min = data["berg_min"]
-    # gait_min = data["gait_min"]
-    # age_range = data["age_range"]
-    # berg_range = data["berg_range"]
-    # gait_range = data["gait_range"]
-    # score = data["score"]
 
     age_scaled = ((age - data["age_min"]) / data["age_range"]).item()
     berg_scaled = ((berg - data["berg_min"]) / data["berg_range"]).item()
