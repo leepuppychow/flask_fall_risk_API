@@ -12,7 +12,6 @@ def logistic_model():
     df = pd.read_csv('fall_risk.csv')
     features = df[['age','berg_balance','gait_speed']]
     labels = df[['fall_risk']]
-    set_global_variables(df)
 
     # Perform feature scaling
     scaler = MinMaxScaler()
@@ -26,33 +25,40 @@ def logistic_model():
     global score
     score = logistic.score(X_test, y_test)
 
+    data = {
+        "model": logistic,
+        "score": score,
+        "age_min": df[['age']].min(),
+        "berg_min": df[['berg_balance']].min(),
+        "gait_min": df[['gait_speed']].min(),
+        "age_range": df[['age']].max() - df[['age']].min(),
+        "berg_range": df[['berg_balance']].max() - df[['berg_balance']].min(),
+        "gait_range": df[['gait_speed']].max() - df[['gait_speed']].min()
+    }
+
     # Pickle the model, do you don't train everytime API is called
-    joblib.dump(logistic, "logistic_regression_model.pkl")
-
-def set_global_variables(df):
-    global age_min, berg_min, gait_min
-    global age_range, berg_range, gait_range
-
-    age_min = df[['age']].min()
-    berg_min = df[['berg_balance']].min()
-    gait_min = df[['gait_speed']].min()
-
-    age_range = df[['age']].max() - age_min
-    berg_range = df[['berg_balance']].max() - berg_min
-    gait_range = df[['gait_speed']].max() - gait_min
+    joblib.dump(data, "logistic_regression_data.pkl")
 
 def predict(age, berg, gait):
-    age_scaled = ((age - age_min) / age_range).item()
-    berg_scaled = ((berg - berg_min) / berg_range).item()
-    gait_scaled = ((gait - gait_min) / gait_range).item()
+    data = joblib.load("./logistic_regression_data.pkl")
+    # model = data["model"]
+    # age_min = data["age_min"]
+    # berg_min = data["berg_min"]
+    # gait_min = data["gait_min"]
+    # age_range = data["age_range"]
+    # berg_range = data["berg_range"]
+    # gait_range = data["gait_range"]
+    # score = data["score"]
 
-    logistic = joblib.load("./logistic_regression_model.pkl")
+    age_scaled = ((age - data["age_min"]) / data["age_range"]).item()
+    berg_scaled = ((berg - data["berg_min"]) / data["berg_range"]).item()
+    gait_scaled = ((gait - data["gait_min"]) / data["gait_range"]).item()
 
-    prediction = logistic.predict([[age_scaled, berg_scaled, gait_scaled]])
+    prediction = data["model"].predict([[age_scaled, berg_scaled, gait_scaled]])
 
     if prediction == 0:
         return {"fall_risk": "LOW",
-                "model_accuracy": score}
+                "model_accuracy": data["score"]}
     else:
         return {"fall_risk": "HIGH",
-                "model_accuracy": score}
+                "model_accuracy": data["score"]}
