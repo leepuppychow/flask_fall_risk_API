@@ -9,6 +9,11 @@ CORS(app)
 def hello():
     return "Fall risk prediction API (logistic regression multivariate classifier)"
 
+@app.route("/v1/train")
+def train_model():
+    fall_risk.logistic_model()
+    return "Logistic Model was Trained"
+
 @app.route('/v1/predict', methods=['GET'])
 def predict_fall_risk():
     age = float(request.args.get('age'))
