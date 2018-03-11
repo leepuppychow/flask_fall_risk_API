@@ -16,9 +16,9 @@ def logistic_model():
     # Perform feature scaling
     scaler = MinMaxScaler()
     X = scaler.fit_transform(features)
-    y = np.ravel(labels)    # this changes our labels(column-vector) into a 1-D array
+    y = np.ravel(labels)
 
-    # Perform 70:30 training:testing data split
+    # 70:30 training:testing data split
     X_train, X_test, y_train, y_test = train_test_split(X,y,test_size=0.3)
     logistic = LogisticRegression()
     logistic.fit(X_train,y_train)

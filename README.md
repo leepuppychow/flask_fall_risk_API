@@ -12,4 +12,4 @@
 
 To get a prediction (age in years, berg as percentage, gait in m/s):
 
-` Example: GET request to: https://fall-risk-api.herokuapp.com/v1/predict?age=75&berg=88&gait=1.1`
+` Example: GET request to: https://fall-risk-api.herokuapp.com/v1/predictfallrisk?age=75&berg=88&gait=1.1`
