@@ -8,8 +8,10 @@
 
 * NOTE: the data used to train this logistic regression classifer model IS FABRICATED. I would love to gather real data from physical therapists or existing studies if possible.
 
-* NOTE: data for the low back pain model was obtained from: https://www.kaggle.com/alihussain1993/lower-back-pain-symptoms-datasetlabelled/data
-I was unable to find the authors of this dataset in order to credit them.
+* NOTE: data for the low back pain model was obtained from the source below. I was unable to find the authors of this dataset in order to credit them.
+
+https://www.kaggle.com/alihussain1993/lower-back-pain-symptoms-datasetlabelled/data
+
 
 ## Endpoints
 
@@ -19,4 +21,4 @@ Fall Risk Prediction (age in years, berg as percentage, gait in m/s):
 
 Low Back Pain Prediction:
 
-`Ex: GET request to: http://localhost:5000/v1/predictlowbackpain?pelvic=25&lumbar=30&scoliosis=40&sacral=100&thoracic=15&cervical=15`
+`Ex: GET request to: http://fall-risk-api.herokuapp.com/v1/predictlowbackpain?pelvic=25&lumbar=30&scoliosis=40&sacral=100&thoracic=15&cervical=15`
